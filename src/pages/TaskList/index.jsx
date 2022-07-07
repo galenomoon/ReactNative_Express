@@ -1,10 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, FlatList, View } from 'react-native'
+import React, { useState } from 'react'
+
+import Header from '../../components/Header'
+import Task from '../../components/Task'
 
 const TaskList = () => {
   return (
     <View>
-      <Text>TaskList</Text>
+      <Header />
+      <Task description={"Compor"} doneAt={new Date()} estimateAt={new Date()} />
     </View>
   )
 }
