@@ -7,12 +7,18 @@ import moment from 'moment'
 import 'moment/locale/pt-br'
 
 
-const Task = ({ description, estimateAt, doneAt }) => {
+const Task = ({ description, estimateAt, doneAt, task }) => {
   const date = moment(isDone ? estimateAt : doneAt).locale('pt-br').format('ddd, D [de] MMMM')
-  const [isDone, setIsDone] = useState(false)
+  const [isDone, setIsDone] = useState(!!doneAt)
+
+  const toggleCheckedTask = (task) => {
+    setIsDone(!isDone)
+    isDone ? delete task.doneAt : task.doneAt = new Date()
+    return task
+  }
   
   return (
-    <TO style={styles.container} onPress={() => setIsDone(!isDone)}>
+    <TO style={styles.container} onPress={() => toggleCheckedTask(task)}>
       <Icon name={`checkbox-${isDone ? 'marked' : 'blank'}-circle`} size={30} />
       <View style={{ width: 340 }}>
         <Text style={[styles.title, isDone && styles.doneTask]}>{description}</Text>
@@ -29,7 +35,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    borderWidth: 1,
+    borderBottomWidth: 0.5,
     padding: 10,
   },
   title: {
